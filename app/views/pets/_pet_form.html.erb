@@ -1,0 +1,22 @@
+<% @pet.errors.full_messages.each do |message| %>
+  <p><%= message %></p>
+<% end %>
+
+<%= form_with model: @pet do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :age %>
+    <%= form.text_field :age %>
+  </div>
+
+  <div>
+    <%= form.label :species_id  %>
+    <%= form.text_field :species_id %>
+  </div>
+
+  <%= form.submit %>
+<% end %>

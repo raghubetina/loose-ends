@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
+  resources :tasks
+
+  # get("/whatever")
   # Routes for the Pet resource:
+
+  # get("/", { :controller => "pets", :action => "index" })
+
+  # get({ "/" => "pets#index" })
+
+  root "pets#index"
 
   resources :pets
 

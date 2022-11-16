@@ -9,18 +9,27 @@
         <a href="/pets">
           Go back
         </a>
+
+        <%= link_to "Go back", pets_path %>
       </div>
 
       <div>
         <a href="/pets/<%= @pet.id %>" data-method="delete">
           Delete pet
         </a>
+
+        <%#= link_to "Delete pet", pet_path(@pet), data: { method: "delete" } %>
+        <%= link_to "Delete pet", pet_path(@pet), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary", id: "whatever" %>
+        
+        <%= link_to "Delete pet", @pet, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary", id: "whatever" %>
       </div>
 
       <div>
         <a href="/pets/<%= @pet.id %>/edit">
           Edit pet
         </a>
+
+        <%= link_to "Edit pet", edit_pet_path(@pet) %>
       </div>
     </div>
 

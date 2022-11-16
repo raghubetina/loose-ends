@@ -30,6 +30,16 @@ class PetsController < ApplicationController
     matching_pets = Pet.all
 
     @list_of_pets = matching_pets.order({ :created_at => :desc })
+
+    respond_to do |format|
+      format.html do
+        render("pets/index.html.erb")
+      end
+
+      format.json do
+        render json: @list_of_pets 
+      end
+    end
   end
 
   def show
@@ -53,17 +63,15 @@ class PetsController < ApplicationController
   end
 
   def create
-    @pet = Pet.new
-    @pet.name = params.fetch("query_name")
-    @pet.age = params.fetch("query_age")
-    @pet.species_id = params.fetch("query_species_id")
+    pet_params = params.require(:pet).permit(:age, :name, :species_id)
+    
+    @pet = Pet.new(pet_params)
 
     if @pet.valid?
       @pet.save
+
       redirect_to("/pets", { :notice => "Pet created successfully." })
     else
-      # redirect_to("/pets/new", { :alert => @pet.errors.full_messages.to_sentence })
-
       render("new")
     end
   end
@@ -71,15 +79,14 @@ class PetsController < ApplicationController
   def update
     # @pet = Pet.find(params.fetch("id"))
 
-    @pet.name = params.fetch("query_name")
-    @pet.age = params.fetch("query_age")
-    @pet.species_id = params.fetch("query_species_id")
+    pet_params = params.require(:pet).permit(:age, :name, :species_id)
+    
+    @pet.update(pet_params)
 
     if @pet.valid?
-      @pet.save
       redirect_to("/pets/#{@pet.id}", { :notice => "Pet updated successfully."} )
     else
-      redirect_to("/pets/#{@pet.id}", { :alert => @pet.errors.full_messages.to_sentence })
+      render("edit")
     end
   end
 
